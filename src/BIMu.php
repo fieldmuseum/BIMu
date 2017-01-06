@@ -65,7 +65,15 @@ class BIMu {
     public function search(string $fieldToSearch, $value, array $fields) : BIMu
     {
         $this->fields = $fields;
-        $this->terms->add($fieldToSearch, $value);
+
+        if (is_array($value)) {
+            foreach ($value as $v) {
+                $this->terms->add($fieldToSearch, $v);
+            }
+        } else {
+            $this->terms->add($fieldToSearch, $value);
+        }
+
         $this->hits = $this->module->findTerms($this->terms);
 
         return $this;
