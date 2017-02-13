@@ -63,12 +63,10 @@ class BIMu {
     /**
      * Search the EMu module.
      *
-     * @param string $fieldToSearch
-     *   The machine name of the field we're searching on.
-     *
-     * @param mixed $value
-     *   The value we're searching for. If an array provided, we're going to assume
-     *   that an OR search condition is requested.
+     * @param array $criteria
+     *   Array of key, value pairs of the fieldname and value we're looking for.
+     *   This defaults to IMuTerms AND condition. Add true as third param for
+     *   OR searches.
      *
      * @param array $fields
      *   The machine names of the field we want to retrieve from the Module.
@@ -76,19 +74,18 @@ class BIMu {
      * @return BIMu
      *   Returns this object.
      */
-    public function search(string $fieldToSearch, $value, array $fields) : BIMu
+    public function search(array $criteria, array $fields, bool $or = false) : BIMu
     {
         $this->fields = $fields;
 
-        if (is_array($value)) {
+        if ($or) {
             $this->terms = new \IMuTerms('OR');
-
-            foreach ($value as $v) {
-                $this->terms->add($fieldToSearch, $v);
-            }
         } else {
             $this->terms = new \IMuTerms();
-            $this->terms->add($fieldToSearch, $value);
+        }
+
+        foreach ($criteria as $key => $value) {
+            $this->terms->add($key, $value);
         }
 
         $this->hits = $this->module->findTerms($this->terms);
