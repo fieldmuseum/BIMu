@@ -37,13 +37,27 @@ class BIMu {
     /**
      * Object constructor
      */
-    public function __construct($ip, $port, $moduleName)
+    public function __construct($ip, $port, $moduleName, $login = null)
     {
         $this->ip = $ip;
         $this->port = $port;
         $this->moduleName = $moduleName;
         $this->session = new \IMuSession($this->ip, $this->port);
         $this->module = new \IMuModule($this->moduleName, $this->session);
+
+        if (isset($login) && is_array($login)) {
+            $username = (string) key($login);
+            $password = (string) reset($login);
+            $this->session->login($username, $password);
+        }
+    }
+
+    /**
+     * Object destructor
+     */
+    public function __destruct()
+    {
+        $this->session->logout();
     }
 
     /**
