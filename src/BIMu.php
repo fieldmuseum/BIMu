@@ -118,10 +118,15 @@ class BIMu {
      */
     public function get(int $number) : array
     {
-        $this->result = $this->module->fetch('start', 0, $number, $this->fields);
-        $this->records = $this->result->rows;
+        if ($number == 1) {
+            $this->getOne();
+        }
+        else {
+            $this->result = $this->module->fetch('start', 0, $number, $this->fields);
+            $this->records = $this->result->rows;
 
-        return $this->records;
+            return $this->records;
+        }
     }
 
     /**
