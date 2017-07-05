@@ -140,6 +140,10 @@ class BIMu {
         $this->result = $this->module->fetch('start', 0, 1, $this->fields);
         $this->records = $this->result->rows;
 
-        return $this->records;
+        if (empty($this->records)) {
+            return array();
+        } else {
+            return $this->records[0];
+        }
     }
 }
