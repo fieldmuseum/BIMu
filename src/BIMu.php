@@ -25,6 +25,9 @@ class BIMu {
     /** @var array The fields we'd like to return in the results */
     private $fields;
 
+    /** @var int The exact count of records in the results */
+    private $count;
+
     /** @var int The number of hits found from our search */
     private $hits;
 
@@ -94,6 +97,40 @@ class BIMu {
     }
 
     /**
+     * Returns the hits from a search.
+     * Please note that while this is generally considered accurate, it's doesn't
+     * always provide the exact number of results.
+     * See the documentation:
+     * http://imu.mel.kesoftware.com/doc/api/php/accessing/searching.html#number-of-matches
+     *
+     * @return int
+     *   The number of hits.
+     */
+    public function hits() : int
+    {
+        if (empty($this->hits)) {
+            return 0;
+        } else {
+            return $this->hits;
+        }
+    }
+
+    /**
+     * Returns the count from a search.
+     *
+     * @return int
+     *   The count of records.
+     */
+    public function count() : int
+    {
+        if (empty($this->count)) {
+            return 0;
+        } else {
+            return $this->count;
+        }
+    }
+
+    /**
      * Return all results.
      *
      * @return array
@@ -102,6 +139,7 @@ class BIMu {
     public function getAll() : array
     {
         $this->result = $this->module->fetch('start', 0, -1, $this->fields);
+        $this->count = $this->result->count;
         $this->records = $this->result->rows;
 
         return $this->records;
@@ -123,6 +161,7 @@ class BIMu {
         }
         else {
             $this->result = $this->module->fetch('start', 0, $number, $this->fields);
+            $this->count = $this->result->count;
             $this->records = $this->result->rows;
 
             return $this->records;
@@ -138,6 +177,7 @@ class BIMu {
     public function getOne() : array
     {
         $this->result = $this->module->fetch('start', 0, 1, $this->fields);
+        $this->count = $this->result->count;
         $this->records = $this->result->rows;
 
         if (empty($this->records)) {
