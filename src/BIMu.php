@@ -181,7 +181,7 @@ class BIMu {
         $this->records = $this->result->rows;
 
         if (empty($this->records)) {
-            return array();
+            return [];
         } else {
             return $this->records[0];
         }
