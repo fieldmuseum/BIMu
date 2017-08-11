@@ -74,14 +74,17 @@ class BIMu {
      * @param array $fields
      *   The machine names of the field we want to retrieve from the Module.
      *
+     * @param string $or
+     *   Indicates if this is an OR search, instead of an AND.
+     *
      * @return BIMu
      *   Returns this object.
      */
-    public function search(array $criteria, array $fields, bool $or = false) : BIMu
+    public function search(array $criteria, array $fields, string $or = null) : BIMu
     {
         $this->fields = $fields;
 
-        if ($or) {
+        if ($or == 'OR') {
             $this->terms = new \IMuTerms('OR');
         } else {
             $this->terms = new \IMuTerms();
