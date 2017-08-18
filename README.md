@@ -1,5 +1,10 @@
 # BIMu
-A better IMu client.
+A better IMu client, an attempt to improve upon the IMu API for the EMu database
+system, provided by Axiell.
+
+EMu database: http://emu.axiell.com/
+
+IMu API documentation: http://imu.mel.kesoftware.com/doc/api/php/index.html
 
 ## Setting up BIMu
 Include BIMu using composer:
@@ -16,7 +21,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 use BIMu\BIMu;
 
 $bimu = new BIMu("1.1.1.1", 40107, "enarratives");
-$bimu->search(array("DesSubjects_tab" => "My Subject"), array("irn", "NarTitle"));
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->getAll();
 ```
 
@@ -24,7 +29,7 @@ $records = $bimu->getAll();
 Perform a search first, then call the hits function.
 
 ```
-$bimu->search(array("DesSubjects_tab" => "My Subject"), array("irn", "NarTitle"));
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $bimu->hits();
 ```
 
@@ -32,7 +37,7 @@ $bimu->hits();
 You must perform a search, then a get, to be able to access the count.
 
 ```
-$bimu->search(array("DesSubjects_tab" => "My Subject"), array("irn", "NarTitle"));
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->getAll();
 $bimu->count();
 ```
