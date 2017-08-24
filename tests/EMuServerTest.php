@@ -17,9 +17,8 @@ class EMuServerTest extends TestCase
         $dotenv->load();
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
-            getenv("NARRATIVES_TITLE_FIELD"),
-            getenv("EXAMPLE_NARRATIVE_TITLE"),
-            array(getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")));
+            [getenv("NARRATIVES_TITLE_FIELD") => getenv("EXAMPLE_NARRATIVE_TITLE")],
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
         $records = $bimu->getAll();
 
         $this->assertNotEmpty($records);
@@ -36,7 +35,7 @@ class EMuServerTest extends TestCase
             getenv("EMU_IP"),
             getenv("EMU_PORT"),
             getenv("NARRATIVES_MODULE"),
-            array(getenv("USER") => getenv("PASSWORD"))
+            [getenv("USER") => getenv("PASSWORD")]
         );
 
         $this->assertNotEmpty($bimu);
