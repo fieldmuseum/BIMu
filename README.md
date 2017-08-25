@@ -50,6 +50,25 @@ $records = $bimu->getAll();
 $bimu->count();
 ```
 
+## Doing an OR search
+By default, the criteria array for the search() function will perform
+an AND search. If you need to do an OR search, be sure to specify that
+in your search function.
+
+```
+$bimu->search(
+    ["DesSubjects_tab" => "My Subject", "DesSubjects_tab" => "Second subject"],
+    ["irn", "NarTitle"],
+    "OR"
+);
+```
+
+## Doing complex search with combinations of AND/OR
+If you need to do a more complex search, with combinations of AND and OR criteria,
+use the IMu API documentation here:
+
+http://imu.mel.kesoftware.com/doc/api/php/accessing/searching.html
+
 ## StreamEOF error
 If you're encountering a StreamEOF error from trying to return lots of
 records, your best bet is to run two separate queries. First, do a getAll()
