@@ -25,6 +25,14 @@ $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->getAll();
 ```
 
+## Getting a certain number of records
+Use the get() function.
+
+```
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
+$records = $bimu->get(50);
+```
+
 ## Retrieving results hits
 Perform a search first, then call the hits function.
 
