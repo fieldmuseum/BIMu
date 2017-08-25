@@ -63,11 +63,14 @@ $bimu->search(
 );
 ```
 
-## Doing complex search with combinations of AND/OR
+## Doing complex searches with combinations of AND/OR
 If you need to do a more complex search, with combinations of AND and OR criteria,
 use the IMu API documentation here:
 
 http://imu.mel.kesoftware.com/doc/api/php/accessing/searching.html
+
+The IMu API is included in the classpath with BIMu, so you can perform an
+IMu API search as shown in the original documentation.
 
 ## StreamEOF error
 If you're encountering a StreamEOF error from trying to return lots of
