@@ -41,3 +41,9 @@ $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->getAll();
 $bimu->count();
 ```
+
+## StreamEOF error
+If you're encountering a StreamEOF error from trying to return lots of
+records, your best bet is to run two separate queries. First, do a getAll()
+and only return the IRN (id) of the records, then loop through all of your returned
+IRNs (IDs) and perform a getOne() for each record.
