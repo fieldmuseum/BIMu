@@ -33,6 +33,22 @@ $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->get(50);
 ```
 
+### Getting one record
+Use the getOne() function. If you'd like to grab one record at an offset,
+pass an integer value to get a record at that offset.
+
+```
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
+$records = $bimu->getOne();
+```
+
+Get a record at an offset of 2.
+
+```
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
+$records = $bimu->getOne(2);
+```
+
 ## Retrieving results hits
 Perform a search first, then call the hits function.
 
