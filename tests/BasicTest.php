@@ -77,6 +77,21 @@ class BasicTest extends TestCase
     }
 
     /**
+     * Tests getting one search result with offset.
+     */
+    public function testGetOneOffset()
+    {
+        $this->loadEnv();
+        $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
+        $bimu->search(
+            [getenv("NARRATIVES_SUBJECTS") => getenv("EXAMPLE_SUBJECT")],
+            [getenv("ID_FIELD")]);
+        $record = $bimu->getOne(1);
+
+        $this->assertEquals(getenv("TEST_OFFSET_ID"), $record[getenv("ID_FIELD")]);
+    }
+
+    /**
      * Tests search returns array
      */
     public function testSearchResultsArray()

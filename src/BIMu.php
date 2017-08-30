@@ -80,7 +80,7 @@ class BIMu {
      * @return BIMu
      *   Returns this object.
      */
-    public function search(array $criteria, array $fields, string $or = null) : BIMu
+    public function search(array $criteria, array $fields, string $or = null): BIMu
     {
         $this->fields = $fields;
 
@@ -109,7 +109,7 @@ class BIMu {
      * @return int
      *   The number of hits.
      */
-    public function hits() : int
+    public function hits(): int
     {
         if (empty($this->hits)) {
             return 0;
@@ -124,7 +124,7 @@ class BIMu {
      * @return int
      *   The count of records.
      */
-    public function count() : int
+    public function count(): int
     {
         if (empty($this->count)) {
             return 0;
@@ -139,7 +139,7 @@ class BIMu {
      * @return array
      *   Returns an array of the records searched.
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         $this->result = $this->module->fetch('start', 0, -1, $this->fields);
         $this->count = $this->result->count;
@@ -157,7 +157,7 @@ class BIMu {
      * @return array
      *   Returns an array of the records searched.
      */
-    public function get(int $number) : array
+    public function get(int $number): array
     {
         if ($number == 1) {
             $this->getOne();
@@ -174,12 +174,15 @@ class BIMu {
     /**
      * Return the first result.
      *
+     * @param int $offset
+     *   The offset of the search results, from which to retrieve the record.
+     *
      * @return array
      *   Returns an array of the records searched.
      */
-    public function getOne() : array
+    public function getOne(int $offset = 0): array
     {
-        $this->result = $this->module->fetch('start', 0, 1, $this->fields);
+        $this->result = $this->module->fetch('start', $offset, 1, $this->fields);
         $this->count = $this->result->count;
         $this->records = $this->result->rows;
 
