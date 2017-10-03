@@ -45,13 +45,22 @@ class BIMu {
         $this->ip = $ip;
         $this->port = $port;
         $this->moduleName = $moduleName;
-        $this->session = new \IMuSession($this->ip, $this->port);
-        $this->module = new \IMuModule($this->moduleName, $this->session);
+        
+        try {
+            $this->session = new \IMuSession($this->ip, $this->port);
+            $this->module = new \IMuModule($this->moduleName, $this->session);
+        } catch (\IMuException $e) {
+            print "Error initializing IMuSession and IMuModule: $e" . PHP_EOL;
+        }
 
         if (isset($login) && is_array($login)) {
-            $username = (string) key($login);
-            $password = (string) reset($login);
-            $this->session->login($username, $password);
+            try {
+                $username = (string) key($login);
+                $password = (string) reset($login);
+                $this->session->login($username, $password);
+            } catch (\IMuException $e) {
+                print "Error logging in: $e" . PHP_EOL;
+            }
         }
     }
 
@@ -60,7 +69,11 @@ class BIMu {
      */
     public function __destruct()
     {
-        $this->session->logout();
+        try {
+            $this->session->logout();
+        } catch (\IMuException $e) {
+            print "Error logging out: $e" . PHP_EOL;
+        }
     }
 
     /**
@@ -82,21 +95,26 @@ class BIMu {
      */
     public function search(array $criteria, array $fields, string $or = null): BIMu
     {
-        $this->fields = $fields;
+        try {
+            $this->fields = $fields;
 
-        if ($or == 'OR') {
-            $this->terms = new \IMuTerms('OR');
-        } else {
-            $this->terms = new \IMuTerms();
+            if ($or == 'OR') {
+                $this->terms = new \IMuTerms('OR');
+            } else {
+                $this->terms = new \IMuTerms();
+            }
+
+            foreach ($criteria as $key => $value) {
+                $this->terms->add($key, $value);
+            }
+
+            $this->hits = $this->module->findTerms($this->terms);
+
+            return $this;
+
+        } catch (\IMuException $e) {
+            print "Error adding terms and searching: $e" . PHP_EOL;
         }
-
-        foreach ($criteria as $key => $value) {
-            $this->terms->add($key, $value);
-        }
-
-        $this->hits = $this->module->findTerms($this->terms);
-
-        return $this;
     }
 
     /**
@@ -141,11 +159,16 @@ class BIMu {
      */
     public function getAll(): array
     {
-        $this->result = $this->module->fetch('start', 0, -1, $this->fields);
-        $this->count = $this->result->count;
-        $this->records = $this->result->rows;
+        try {
+            $this->result = $this->module->fetch('start', 0, -1, $this->fields);
+            $this->count = $this->result->count;
+            $this->records = $this->result->rows;
 
-        return $this->records;
+            return $this->records;
+
+        } catch (\IMuException $e) {
+            print "Error fetching records -- getAll(): $e" . PHP_EOL;
+        }
     }
 
     /**
@@ -159,15 +182,19 @@ class BIMu {
      */
     public function get(int $number): array
     {
-        if ($number == 1) {
-            $this->getOne();
-        }
-        else {
-            $this->result = $this->module->fetch('start', 0, $number, $this->fields);
-            $this->count = $this->result->count;
-            $this->records = $this->result->rows;
+        try {
+            if ($number == 1) {
+                $this->getOne();
+            }
+            else {
+                $this->result = $this->module->fetch('start', 0, $number, $this->fields);
+                $this->count = $this->result->count;
+                $this->records = $this->result->rows;
 
-            return $this->records;
+                return $this->records;
+            }
+        } catch (\IMuException $e) {
+            print "Error fetching records -- get($number): $e" . PHP_EOL;
         }
     }
 
@@ -182,14 +209,18 @@ class BIMu {
      */
     public function getOne(int $offset = 0): array
     {
-        $this->result = $this->module->fetch('start', $offset, 1, $this->fields);
-        $this->count = $this->result->count;
-        $this->records = $this->result->rows;
+        try {
+            $this->result = $this->module->fetch('start', $offset, 1, $this->fields);
+            $this->count = $this->result->count;
+            $this->records = $this->result->rows;
 
-        if (empty($this->records)) {
-            return [];
-        } else {
-            return $this->records[0];
+            if (empty($this->records)) {
+                return [];
+            } else {
+                return $this->records[0];
+            }
+        } catch (\IMuException $e) {
+            print "Error fetching records -- getOne($offset): $e" . PHP_EOL;
         }
     }
 }
