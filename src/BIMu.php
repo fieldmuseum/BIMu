@@ -114,6 +114,7 @@ class BIMu {
 
         } catch (\IMuException $e) {
             print "Error adding terms and searching: $e" . PHP_EOL;
+            return null;
         }
     }
 
@@ -168,6 +169,7 @@ class BIMu {
 
         } catch (\IMuException $e) {
             print "Error fetching records -- getAll(): $e" . PHP_EOL;
+            return [];
         }
     }
 
@@ -195,6 +197,7 @@ class BIMu {
             }
         } catch (\IMuException $e) {
             print "Error fetching records -- get($number): $e" . PHP_EOL;
+            return [];
         }
     }
 
@@ -221,6 +224,7 @@ class BIMu {
             }
         } catch (\IMuException $e) {
             print "Error fetching records -- getOne($offset): $e" . PHP_EOL;
+            return [];
         }
     }
 }
