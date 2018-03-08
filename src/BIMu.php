@@ -2,10 +2,10 @@
 
 namespace BIMu;
 
-class BIMu {
-
+class BIMu
+{
     /** @var string EMu server IP */
-    private $ip; 
+    private $ip;
 
     /** @var int EMu server port */
     private $port;
@@ -109,9 +109,7 @@ class BIMu {
             }
 
             $this->hits = $this->module->findTerms($this->terms);
-
             return $this;
-
         } catch (\IMuException $e) {
             print "Error adding terms and searching: $e" . PHP_EOL;
             return null;
@@ -166,7 +164,6 @@ class BIMu {
             $this->records = $this->result->rows;
 
             return $this->records;
-
         } catch (\IMuException $e) {
             print "Error fetching records -- getAll(): $e" . PHP_EOL;
             return [];
@@ -187,8 +184,7 @@ class BIMu {
         try {
             if ($number == 1) {
                 $this->getOne();
-            }
-            else {
+            } else {
                 $this->result = $this->module->fetch('start', 0, $number, $this->fields);
                 $this->count = $this->result->count;
                 $this->records = $this->result->rows;
