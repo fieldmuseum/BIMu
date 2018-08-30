@@ -37,7 +37,8 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_SUBJECTS") => getenv("EXAMPLE_SUBJECT")],
-            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]
+        );
         $records = $bimu->getAll();
 
         $this->assertNotEmpty($records);
@@ -53,7 +54,8 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_SUBJECTS") => getenv("EXAMPLE_SUBJECT")],
-            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]
+        );
         $records = $bimu->get(9);
  
         $this->assertNotEmpty($records);
@@ -69,26 +71,12 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_TITLE_FIELD") => getenv("EXAMPLE_NARRATIVE_TITLE")],
-            [getenv("ID_FIELD")]);
+            [getenv("ID_FIELD")]
+        );
         $records = $bimu->getOne();
  
         $this->assertNotEmpty($records);
         $this->assertEquals(2, count($records));
-    }
-
-    /**
-     * Tests getting one search result with offset.
-     */
-    public function testGetOneOffset()
-    {
-        $this->loadEnv();
-        $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
-        $bimu->search(
-            [getenv("NARRATIVES_SUBJECTS") => getenv("EXAMPLE_SUBJECT")],
-            [getenv("ID_FIELD")]);
-        $record = $bimu->getOne(1);
-
-        $this->assertEquals(getenv("TEST_OFFSET_ID"), $record[getenv("ID_FIELD")]);
     }
 
     /**
@@ -100,7 +88,8 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_TITLE_FIELD") => getenv("EXAMPLE_NARRATIVE_TITLE")],
-            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]
+        );
         $records = $bimu->getAll();
 
         $this->assertArrayHasKey(0, $records);
@@ -115,7 +104,8 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_TITLE_FIELD") => getenv("EXAMPLE_NARRATIVE_TITLE")],
-            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]
+        );
         $hits = $bimu->hits();
 
         $this->assertInternalType('integer', $hits);
@@ -131,7 +121,8 @@ class BasicTest extends TestCase
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
             [getenv("NARRATIVES_TITLE_FIELD") => getenv("EXAMPLE_NARRATIVE_TITLE")],
-            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]);
+            [getenv("ID_FIELD"), getenv("NARRATIVES_TITLE_FIELD")]
+        );
         $bimu->getAll();
         $count = $bimu->count();
 
