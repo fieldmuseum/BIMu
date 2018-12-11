@@ -176,16 +176,19 @@ class BIMu
      * @param int $number
      *   The number of results we'd like returned.
      *
+     * @param int $offset
+     *   The offset at which we're beginning to return records.
+     *
      * @return array
      *   Returns an array of the records searched.
      */
-    public function get(int $number): array
+    public function get(int $number = 1, int $offset = 0): array
     {
         try {
             if ($number == 1) {
                 $this->getOne();
             } else {
-                $this->result = $this->module->fetch('start', 0, $number, $this->fields);
+                $this->result = $this->module->fetch('start', $offset, $number, $this->fields);
                 $this->count = $this->result->count;
                 $this->records = $this->result->rows;
 

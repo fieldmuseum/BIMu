@@ -26,11 +26,18 @@ $records = $bimu->getAll();
 ```
 
 ## Getting a certain number of records
-Use the get() function.
+Use the get() function. The first parameter is an integer of the number
+of records you want to return. The second parameter is how many records
+offset you'd like your record retrieval to begin.
+
+If no parameters are passed, the get() function defaults to retrieving
+1 record at an offset of 0.
+
+This example returns 50 records at an offset of 200.
 
 ```
 $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
-$records = $bimu->get(50);
+$records = $bimu->get(50, 200);
 ```
 
 ## Getting one record
