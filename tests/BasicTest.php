@@ -13,7 +13,7 @@ class BasicTest extends TestCase
      */
     public function loadEnv()
     {
-        $dotenv = new Dotenv(__DIR__ . '/..');
+        $dotenv = Dotenv::create(__DIR__ . '/..');
         $dotenv->load();
     }
 

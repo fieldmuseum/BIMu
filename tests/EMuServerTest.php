@@ -13,7 +13,7 @@ class EMuServerTest extends TestCase
      */
     public function testConnection()
     {
-        $dotenv = new Dotenv(__DIR__ . '/..');
+        $dotenv = Dotenv::create(__DIR__ . '/..');
         $dotenv->load();
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
@@ -30,7 +30,7 @@ class EMuServerTest extends TestCase
      */
     public function testLogin()
     {
-        $dotenv = new Dotenv(__DIR__ . '/..');
+        $dotenv = Dotenv::create(__DIR__ . '/..');
         $dotenv->load();
         $bimu = new BIMu(
             getenv("EMU_IP"),
