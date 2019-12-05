@@ -36,7 +36,7 @@ class EMuServerTest extends TestCase
             getenv("EMU_IP"),
             getenv("EMU_PORT"),
             getenv("NARRATIVES_MODULE"),
-            [getenv("USER") => getenv("PASSWORD")]
+            [getenv("EMU_USER") => getenv("PASSWORD")]
         );
 
         $this->assertNotEmpty($bimu);
