@@ -108,7 +108,7 @@ class BasicTest extends TestCase
         );
         $hits = $bimu->hits();
 
-        $this->assertInternalType('integer', $hits);
+        $this->assertIsInt($hits);
         $this->assertGreaterThan(0, $hits);
     }
 
@@ -126,7 +126,7 @@ class BasicTest extends TestCase
         $bimu->getAll();
         $count = $bimu->count();
 
-        $this->assertInternalType('integer', $count);
+        $this->assertIsInt($count);
         $this->assertGreaterThan(0, $count);
     }
 }

@@ -28,10 +28,11 @@ class EMuServerTest extends TestCase
     /**
      * Tests EMu server login
      */
-    public function testLogin()
+    public function testLogin(): void
     {
         $dotenv = Dotenv::create(__DIR__ . '/..');
         $dotenv->load();
+
         $bimu = new BIMu(
             getenv("EMU_IP"),
             getenv("EMU_PORT"),
@@ -39,6 +40,6 @@ class EMuServerTest extends TestCase
             [getenv("EMU_USER") => getenv("PASSWORD")]
         );
 
-        $this->assertNotEmpty($bimu);
+        $this->expectOutputString(''); // Proper login should print nothing
     }
 }
