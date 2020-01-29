@@ -4,7 +4,7 @@ system, provided by Axiell.
 
 EMu database: http://emu.axiell.com/
 
-IMu API documentation: http://imu.mel.kesoftware.com/doc/api/php/index.html
+IMu API documentation: https://github.com/axiell/imu-api-php
 
 ## Setting up BIMu
 Include BIMu using composer:
