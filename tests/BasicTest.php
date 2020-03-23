@@ -3,7 +3,6 @@
 namespace BIMu\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Dotenv\Dotenv;
 use BIMu\BIMu;
 
 class BasicTest extends TestCase
@@ -13,7 +12,7 @@ class BasicTest extends TestCase
      */
     public function loadEnv()
     {
-        $dotenv = Dotenv::create(__DIR__ . '/..');
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
         $dotenv->load();
     }
 

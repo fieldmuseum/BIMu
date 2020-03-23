@@ -3,7 +3,6 @@
 namespace BIMu\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Dotenv\Dotenv;
 use BIMu\BIMu;
 
 class EMuServerTest extends TestCase
@@ -13,7 +12,7 @@ class EMuServerTest extends TestCase
      */
     public function testConnection()
     {
-        $dotenv = Dotenv::create(__DIR__ . '/..');
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
         $dotenv->load();
         $bimu = new BIMu(getenv("EMU_IP"), getenv("EMU_PORT"), getenv("NARRATIVES_MODULE"));
         $bimu->search(
@@ -30,7 +29,7 @@ class EMuServerTest extends TestCase
      */
     public function testLogin(): void
     {
-        $dotenv = Dotenv::create(__DIR__ . '/..');
+        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
         $dotenv->load();
 
         $bimu = new BIMu(
