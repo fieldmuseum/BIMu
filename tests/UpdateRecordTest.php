@@ -24,7 +24,7 @@ class UpdateRecordTest extends TestCase
             ['irn' => getenv('UPDATE_TEST_IRN')],
             ['irn', getenv('NARRATIVES_TITLE_FIELD')
         ]);
-        $result = $bimu->updateAll(
+        $result = $bimu->update(
             [
                 getenv('INSERT_NARR_TITLE_FIELD') => getenv('UPDATE_NARR_TITLE_VALUE'),
             ],

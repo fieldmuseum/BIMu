@@ -277,12 +277,12 @@ class BIMu
      * @return array
      *   Returns an array of specified values after records updated.
      */
-    public function updateAll(array $valuesToUpdate, array $fieldsToReturn): array
+    public function update(array $valuesToUpdate, array $fieldsToReturn): array
     {
         $this->getAll();
 
         if (empty($this->records)) {
-            $message = "You must search for records first, before updating -- updateAll()" . PHP_EOL;
+            $message = "You must have records set from a search before updating -- update()" . PHP_EOL;
             print $message;
             throw new \Exception($message);
         }
@@ -296,7 +296,7 @@ class BIMu
             return $this->records;
         } catch (\Exception $e) {
             $error = $e->getMessage();
-            print "Error updating records -- updateAll(): $error" .
+            print "Error updating records -- update(): $error" .
                 PHP_EOL;
 
             return [];
@@ -321,7 +321,7 @@ class BIMu
         $this->getOne();
 
         if (empty($this->records)) {
-            $message = "You must search for records first, before updating -- updateOne()" . PHP_EOL;
+            $message = "You must have records set from a search before updating -- updateOne()" . PHP_EOL;
             print $message;
             throw new \Exception($message);
         }
@@ -343,6 +343,40 @@ class BIMu
                 PHP_EOL;
 
             return [];
+            exit(1);
+        }
+    }
+
+    /**
+     * Deletes (removes) one or more records from a module.
+     *
+     * @param int $numberOfRecordsToDelete
+     *   Number of records that should be deleted
+     *
+     * @return int
+     *   Returns number of records deleted
+     */
+    public function delete(int $numberOfRecordsToDelete): int
+    {
+        $this->getAll();
+
+        if (empty($this->records)) {
+            $message = "You must have records set from a search before deleting -- delete()" .
+                PHP_EOL;
+            print $message;
+            throw new \Exception($message);
+        }
+
+        try {
+            $numberRecordsDeleted = $this->module->remove('start', 0, $numberOfRecordsToDelete);
+
+            return $numberRecordsDeleted;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            print "Error deleting records -- delete(): $error" .
+                PHP_EOL;
+
+            return 0;
             exit(1);
         }
     }
