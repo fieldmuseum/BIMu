@@ -98,7 +98,7 @@ class BIMu
         try {
             $this->fields = $fields;
 
-            if ($or == 'OR') {
+            if (strtoupper($or) == 'OR') {
                 $this->terms = new \IMuTerms('OR');
             } else {
                 $this->terms = new \IMuTerms();
