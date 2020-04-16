@@ -100,3 +100,41 @@ If you're encountering a StreamEOF error from trying to return lots of
 records, your best bet is to run two separate queries. First, do a getAll()
 and only return the IRN (id) of the records, then loop through all of your returned
 IRNs (IDs) and perform a getOne() for each record.
+
+## Updating records
+Use the updateOne() function if you'd like to update only one record.  
+
+Use the update() function if you'd like to update ALL of the records
+returned from a search.  
+
+Be sure you perform a search() before trying to update any records.  
+
+$valuesToUpdate needs to be an associative array of fields to update
+with their record values. $fieldsToReturn is an array of the backend
+record fields to return from the update.
+
+```
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
+$valuesToUpdate = [
+    "NarTitle" => "My new title",
+    "SumSubtitle" => "Updated subtitle"
+];
+$fieldsToReturn = ["irn", "NarTitle", "SumSubtitle"];
+$record = $bimu->updateOne($valuesToUpdate, $fieldsToReturn);
+```
+
+## Deleting records
+Use the delete() function if you'd like to remove records from
+an EMu module.  
+
+Be sure you perform a search() before trying to delete records.
+
+$numberOfRecordsToDelete specifies how many records you'd like
+to delete from the records returned from the search.
+
+The delete() function returns the number of records deleted.
+
+```
+$bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
+$numberRecordsDeleted = $bimu->delete(1);
+```
