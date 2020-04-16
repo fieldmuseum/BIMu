@@ -121,7 +121,7 @@ class BIMu
      * Please note that while this is generally considered accurate, it's doesn't
      * always provide the exact number of results.
      * See the documentation:
-     * http://imu.mel.kesoftware.com/doc/api/php/accessing/searching.html#number-of-matches
+     * https://github.com/axiell/imu-api-php#3-1-5-number-of-matches
      *
      * @return int
      *   The number of hits.
