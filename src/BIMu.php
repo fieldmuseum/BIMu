@@ -264,4 +264,43 @@ class BIMu
 
         return $result;
     }
+
+    /**
+     * Updates all records with the provided values.
+     *
+     * @param array $valuesToUpdate
+     *   The values to update in the records.
+     *
+     * @param array $fieldsToReturn
+     *   The fields to return after records are updated.
+     * 
+     * @return array
+     *   Returns an array of specified values after records updated.
+     */
+    public function updateAll(array $valuesToUpdate, array $fieldsToReturn): array
+    {
+        $this->getAll();
+
+        if (empty($this->records)) {
+            $message = "You must search for records first, before updating -- updateAll()" . PHP_EOL;
+            print $message;
+            throw new \Exception($message);
+        }
+
+        try {
+            $this->result = $this->module->update(
+                'start', 0, -1, $valuesToUpdate, $fieldsToReturn
+            );
+            $this->records = $this->result->rows;
+
+            return $this->records;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            print "Error updating records -- updateAll(): $error" .
+                PHP_EOL;
+
+            return [];
+            exit(1);
+        }
+    }
 }
