@@ -61,7 +61,7 @@ Perform a search first, then call the hits function.
 
 ```
 $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
-$bimu->hits();
+$hits = $bimu->hits();
 ```
 
 ## Retrieving results count
@@ -70,7 +70,7 @@ You must perform a search, then a get, to be able to access the count.
 ```
 $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
 $records = $bimu->getAll();
-$bimu->count();
+$count = $bimu->count();
 ```
 
 ## Doing an OR search
@@ -90,7 +90,7 @@ $bimu->search(
 If you need to do a more complex search, with combinations of AND and OR criteria,
 use the IMu API documentation here:
 
-http://imu.mel.kesoftware.com/doc/api/php/accessing/searching.html
+https://github.com/axiell/imu-api-php#3-1-searching-a-module
 
 The IMu API is included in the classpath with BIMu, so you can perform an
 IMu API search as shown in the original documentation.
