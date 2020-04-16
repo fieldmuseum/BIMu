@@ -303,4 +303,47 @@ class BIMu
             exit(1);
         }
     }
+
+    /**
+     * Updates one record with the provided values.
+     *
+     * @param array $valuesToUpdate
+     *   The values to update in the records.
+     *
+     * @param array $fieldsToReturn
+     *   The fields to return after records are updated.
+     * 
+     * @return array
+     *   Returns an array of specified values after records updated.
+     */
+    public function updateOne(array $valuesToUpdate, array $fieldsToReturn): array
+    {
+        $this->getOne();
+
+        if (empty($this->records)) {
+            $message = "You must search for records first, before updating -- updateOne()" . PHP_EOL;
+            print $message;
+            throw new \Exception($message);
+        }
+
+        try {
+            $this->result = $this->module->update(
+                'start', 0, 1, $valuesToUpdate, $fieldsToReturn
+            );
+            $this->records = $this->result->rows;
+
+            if (empty($this->records[0])) {
+                return [];
+            } else {
+                return $this->records[0];
+            }
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            print "Error updating record -- updateOne(): $error" .
+                PHP_EOL;
+
+            return [];
+            exit(1);
+        }
+    }
 }
