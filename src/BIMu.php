@@ -13,6 +13,9 @@ class BIMu
     /** @var IMuSession session variable */
     private $session;
 
+    /** @var array optional login credentials */
+    private $loginCredentials;
+
     /** @var IMuModule module variable */
     private $module;
 
@@ -55,6 +58,7 @@ class BIMu
 
         if (isset($login) && is_array($login)) {
             try {
+                $this->loginCredentials = $login;
                 $username = (string) key($login);
                 $password = (string) reset($login);
                 $this->session->login($username, $password);
@@ -225,5 +229,39 @@ class BIMu
             print "Error fetching records -- getOne($offset): $e" . PHP_EOL;
             return [];
         }
+    }
+
+    /**
+     * Inserts a new record into the EMu module.
+     *
+     * @param array $valuesToInsert
+     *   The values to insert to a new record.
+     *
+     * @param array $fieldsToReturn
+     *   The fields to return after the new record is inserted.
+     *
+     * @return array
+     *   Returns an array of specified values after record inserted.
+     */
+    public function insert(array $valuesToInsert, array $fieldsToReturn): array
+    {
+        if (empty($this->loginCredentials)) {
+            $message = "You must use login credentials to insert a record -- insert()" . PHP_EOL;
+            print $message;
+            throw new \Exception($message);
+        }
+
+        try {
+            $result = $this->module->insert($valuesToInsert, $fieldsToReturn);
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            print "Error inserting record -- insert(): $error" .
+                PHP_EOL;
+
+            return [];
+            exit(1);
+        }
+
+        return $result;
     }
 }
