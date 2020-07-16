@@ -91,13 +91,23 @@ class BIMu
      * @param array $fields
      *   The machine names of the field we want to retrieve from the Module.
      *
+     * @param string $op
+     *   The search operator to use, defaults to null (fuzzy match)
+     *   Other options include:
+     *   =  (equals)
+     *   <> (does not equal)
+     *   <  (less than)
+     *   <= (less than or equal to)
+     *   >  (greater than)
+     *   >= (greater than or equal to)
+     *
      * @param string $or
      *   Indicates if this is an OR search, instead of an AND.
      *
      * @return BIMu
      *   Returns this object.
      */
-    public function search(array $criteria, array $fields, string $or = null): BIMu
+    public function search(array $criteria, array $fields, string $op = null, string $or = null): BIMu
     {
         try {
             $this->fields = $fields;
@@ -109,7 +119,11 @@ class BIMu
             }
 
             foreach ($criteria as $key => $value) {
-                $this->terms->add($key, $value);
+                if (is_null($op)) {
+                    $this->terms->add($key, $value);
+                } else {
+                    $this->terms->add($key, $value, $op);
+                }
             }
 
             $this->hits = $this->module->findTerms($this->terms);
