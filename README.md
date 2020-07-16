@@ -33,7 +33,8 @@ offset you'd like your record retrieval to begin.
 If no parameters are passed, the get() function defaults to retrieving
 1 record at an offset of 0.
 
-This example returns 50 records at an offset of 200.
+This example returns 50 records at an offset of 200. If you don't
+include a search operator, a fuzzy, "contains" search will be done.
 
 ```
 $bimu->search(["DesSubjects_tab" => "My Subject"], ["irn", "NarTitle"]);
@@ -82,6 +83,29 @@ in your search function.
 $bimu->search(
     ["DesSubjects_tab" => "My Subject", "DesSubjects_tab" => "Second subject"],
     ["irn", "NarTitle"],
+    "=",
+    "OR"
+);
+```
+
+## Comparison operators
+This operator specifies how the value should search against the field value.
+The search operator to use, defaults to null, which is a fuzzy match.
+
+Other options include:  
+`=`  (equals)  
+`<>` (does not equal)  
+`<`  (less than)  
+`<=` (less than or equal to)  
+`>`  (greater than)  
+`>=` (greater than or equal to)
+
+Example search:  
+```
+$bimu->search(
+    ["DesSubjects_tab" => "My Subject", "DesSubjects_tab" => "Second subject"],
+    ["irn", "NarTitle"],
+    "<>",
     "OR"
 );
 ```
